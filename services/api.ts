@@ -6,8 +6,15 @@ import type {
     Patient,
 } from '@/types';
 
-// Placeholder API base URL - replace with actual backend URL when available
-const API_BASE_URL = 'https://api.medication-reminder.example.com';
+// API Configuration
+// TO USE THE FASTAPI BACKEND:
+// 1. Start backend: cd backend && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+// 2. For Android Emulator: use 'http://10.0.2.2:8000'
+// 3. For iOS Simulator: use 'http://localhost:8000'
+// 4. For Physical Device: use your computer's IP (e.g., 'http://192.168.1.100:8000')
+// 5. Set useMockData = false in the ApiService class (line 147)
+
+const API_BASE_URL = 'http://10.0.2.2:8000'; // Special IP for Android Emulator
 
 // Mock data for development
 const MOCK_PATIENTS: Patient[] = [
@@ -144,7 +151,7 @@ const MOCK_PATIENTS: Patient[] = [
 
 class ApiService {
     private token: string | null = null;
-    private useMockData = true; // Set to false when backend is ready
+    private useMockData = false; // Set to false when backend is ready
 
     /**
      * Login to the system

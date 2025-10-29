@@ -1,39 +1,118 @@
-# Welcome to your Expo app 👋
+# Medication Reminder App 💊
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native application for nurses to manage and track patient medications in hospitals or care facilities. Built with Expo and FastAPI.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 🔐 **Secure Login** - Authentication for nurses
+- 👥 **Patient Management** - Grid/List view of all patients
+- ⏰ **Medication Reminders** - Visual alerts (flashing) for overdue medications
+- 📋 **Patient Details** - Comprehensive medication information and schedules
+- ✅ **Action Buttons** - Mark as Done, Delay 30 minutes, or Cancel
+- 💾 **Offline Support** - Local caching with automatic sync
+- 📱 **Tablet Optimized** - Responsive design for iPad and Android tablets
 
+## Project Structure
+
+```
+asg3/
+├── app/                    # React Native screens (Expo Router)
+│   ├── _layout.tsx        # Root layout with navigation
+│   ├── index.tsx          # Entry point
+│   ├── login.tsx          # Login screen
+│   ├── patients.tsx       # Patient list/grid with flashing alerts
+│   └── patient/[id].tsx   # Patient detail screen
+├── services/              # API and data services
+│   ├── api.ts            # API service with mock data
+│   ├── storage.ts        # AsyncStorage for offline caching
+│   └── sync.ts           # Background sync service
+├── types/                # TypeScript interfaces
+│   └── index.ts          # Patient, Medication, User types
+├── backend/              # FastAPI backend
+│   ├── main.py           # API server with in-memory storage
+│   ├── requirements.txt  # Python dependencies
+│   └── README.md         # Backend documentation
+└── components/           # Reusable UI components
+```
+
+## Getting Started
+
+### Frontend Setup
+
+1. **Install dependencies:**
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. **Start the app:**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. **Run on device:**
+   - Press `i` for iOS simulator
+   - Press `a` for Android emulator
+   - Scan QR code with Expo Go app on your device
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Backend Setup (Optional)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+The app works with **mock data by default**. To use the real backend:
 
-## Get a fresh project
+1. **Install Python dependencies:**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
 
-When you're ready, run:
+2. **Start the backend server:**
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
 
-```bash
-npm run reset-project
-```
+3. **Update frontend configuration:**
+   - Find your computer's IP: `ifconfig | grep inet` (macOS/Linux) or `ipconfig` (Windows)
+   - Edit `services/api.ts`:
+     ```typescript
+     const API_BASE_URL = 'http://YOUR_IP:8000';
+     private useMockData = false;
+     ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+4. **Test the API:**
+   - Visit http://localhost:8000/docs for interactive documentation
+
+## Default Credentials
+
+**Username:** `nurse`  
+**Password:** `nurse123`
+
+## Mock Data
+
+The app includes 6 mock patients:
+
+**Patients with overdue medications (will flash):**
+- John Doe - Room 101, Bed A
+- Robert Johnson - Room 103, Bed A  
+- Michael Davis - Room 105, Bed A
+
+**Patients with upcoming medications:**
+- Jane Smith - Room 102, Bed B
+- Emily Brown - Room 104, Bed C
+- Sarah Wilson - Room 106, Bed B
+
+## Key Technologies
+
+- **Frontend:** React Native, Expo Router, TypeScript, Reanimated
+- **Backend:** FastAPI, Python, JWT Authentication
+- **Storage:** AsyncStorage (offline), In-memory (backend)
+- **State Management:** React Hooks
+- **Navigation:** Expo Router (file-based routing)
+
+## Testing on iPad/Tablet
+
+1. Ensure your device and computer are on the same network
+2. Start the Expo dev server
+3. Scan QR code with Expo Go or Camera app
+4. The app will automatically use grid layout on tablets (width > 600px)
 
 ## Learn more
 

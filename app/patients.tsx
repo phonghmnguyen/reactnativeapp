@@ -2,7 +2,7 @@ import { apiService } from '@/services/api';
 import { storageService } from '@/services/storage';
 import { syncService } from '@/services/sync';
 import type { Patient } from '@/types';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
     Alert,
@@ -182,6 +182,13 @@ export default function PatientsScreen() {
             syncService.stopAutoSync(syncInterval);
         };
     }, []);
+
+    // Refresh when screen comes back into focus
+    useFocusEffect(
+        useCallback(() => {
+            fetchPatients(false);
+        }, [])
+    );
 
     const handlePatientPress = (patient: Patient) => {
         router.push({
